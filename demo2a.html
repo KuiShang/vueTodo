@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>todoDEMO</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="reset.css">
+    <link href="//cdn.bootcss.com/bootstrap/4.0.0-alpha.6/css/bootstrap.css" rel="stylesheet">
+   <!-- <link href="//cdn.bootcss.com/bootstrap/3.0.2/css/bootstrap.css" rel="stylesheet">-->
+    <link rel="stylesheet" href="./text.css">
+    <style>
+        .container {
+            padding-top: 50px;
+        }
+    </style>
+</head>
+<body>
+<div class="div1 container">
+    <div class="row">
+        <div class="col-md-12">
+            <header class="">
+                <h1 class=" text-center text-primary">TO<span class="text-danger">D</span>O<span
+                        class="text-warning">S</span></h1>
+                <label for="myInput">说点什么吧： </label>
+                <input type="text" class="form-control" id="myInput" placeholder=" add a todo" v-model="newTodo"
+                       @keyup.enter="addNewTodo">
+            </header>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <section class="content">
+                <ul>
+                    <li v-for="(todo,index) in todos"
+                        class="todo"
+                        :class="{editing : editedTodo === todo , compeleted : todo.completed}">
+                        <input type="checkbox" v-model="todo.completed" class="toggle">
+                        <label @dblclick="edit(todo)">{{index}}--{{todo.title}}</label>
+                        <input type="text"
+                               v-model="todo.title"
+                               @keyup.enter="submit(todo,index)"
+                               @blur="submit(todo,index)">
+
+                        <button @click="removeItem(index)" class="destory"></button>
+
+
+                    </li>
+                </ul>
+            </section>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3">
+            <span>
+                总计：{{total}}
+            </span>
+        </div>
+        <div class="col-md-3">
+            <span v-show="!!compeleted">
+                已完成：{{compeleted}}
+            </span>
+        </div>
+        <div class="col-md-3">
+
+        </div>
+        <div class="col-md-3">
+            <button v-show="!!compeleted" @click="removeCompleted" class="clear-completed float-md-right ">
+                清除已完成
+            </button>
+        </div>
+    </div>
+</div>
+
+
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.14.1/lodash.min.js"></script>
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<script>
+
+    var filters = {
+        comleleted: function (todos) {
+            return todos.filter(function (todo) {
+                return todo.completed;
+            });
+        },
+        active: function (todos) {
+            return todos.filter(function (todo) {
+                return !todo.completed;
+            });
+        }
+    }
+
+    var vm = new Vue({
+        el: '.div1',
+        data: {
+            newTodo: '',
+            todos: [],
+            editedTodo: null,
+
+        },
+        methods: {
+            addNewTodo: function () {
+                this.todos.push({
+                    id: this.total,
+                    title: this.newTodo,
+                    completed: false
+                });
+                this.newTodo = '';
+            },
+            removeItem: function (index) {
+                this.todos.splice(index, 1)
+            },
+            edit: function (todo) {
+                this.editedTodo = todo;
+            },
+            submit: function (todo, index) {
+                if (!this.editedTodo) {
+                    return
+                }
+                this.editedTodo = null;
+                var title = todo.title.trim();
+                if (!title) {
+                    this.removeItem(index);
+                }
+            },
+            removeCompleted : function () {
+                this.todos =filters.active(this.todos);
+            }
+        },
+        computed: {
+            total: function () {
+                return this.todos.length;
+            },
+            compeleted: function () {
+                return filters.comleleted(this.todos).length;
+            }
+        }
+    })
+</script>
+</html>

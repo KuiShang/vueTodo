@@ -1,0 +1,74 @@
+li.todo {
+  border-bottom: 1px solid #ededed;
+  position: relative; }
+  li.todo .toggle {
+    height: 40px;
+    width: 40px;
+    appearance: none;
+    -webkit-appearance: none;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin: auto 0; }
+  li.todo .toggle:after {
+    content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="-10 -18 100 135"><circle cx="50" cy="50" r="50" fill="none" stroke="#ededed" stroke-width="3"/></svg>'); }
+  li.todo .toggle:checked:after {
+    content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="-10 -18 100 135"><circle cx="50" cy="50" r="50" fill="none" stroke="#bddad5" stroke-width="3"/><path fill="#5dc2af" d="M72 25L42 71 27 56l-4 4 20 20 34-52z"/></svg>'); }
+  li.todo label {
+    margin-left: 40px;
+    display: block;
+    padding: 15px 45px 15px 10px;
+    margin-bottom: 0;
+    transition: color 0.4s; }
+  li.todo input[type="text"] {
+    display: none; }
+  li.todo .destory {
+    display: none;
+    position: absolute;
+    top: 0;
+    right: 10px;
+    bottom: 0;
+    margin: auto 0;
+    width: 40px;
+    height: 40px;
+    -webkit-appearance: none;
+    background: none;
+    border: none;
+    color: #cc9a9a;
+    font-size: 20px;
+    border: 0;
+    outline: none; }
+  li.todo .destory:hover {
+    /*color: #af5b5e;*/
+    color: red; }
+  li.todo .destory:after {
+    content: 'x'; }
+
+li.todo.editing input[type="text"] {
+  display: block;
+  margin-left: 40px;
+  padding: 12px;
+  width: 80%;
+  border: 1px solid #999;
+  box-shadow: inset 0 -1px 5px 0 rgba(0, 0, 0, 0.2); }
+li.todo.editing .toggle, li.todo.editing label {
+  display: none; }
+
+li.todo:hover .destory {
+  display: block; }
+
+li.todo.compeleted label {
+  color: #d9d9d9;
+  text-decoration: line-through; }
+
+.clear-completed {
+  -webkit-appearance: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #777; }
+
+.clear-completed:hover {
+  text-decoration: underline; }
+
+/*# sourceMappingURL=text.css.map */
